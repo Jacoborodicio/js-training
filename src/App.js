@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import data from './data/arrayObjectsDummy';
 
+
+// TODO: Comenzar con setState y props in depth
 class App extends Component {
   constructor(props) {
     super(props);
