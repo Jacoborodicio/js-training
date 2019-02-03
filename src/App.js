@@ -4,6 +4,7 @@ import data from './data/arrayObjectsDummy';
 import Users from './components/users/users';
 
 import MapMethod from './components/mapMethod/mapMethod';
+import ReduceMethod from './components/reduceMethod/reduceMethod';
 
 // TODO: Comenzar con setState y props in depth
 class App extends Component {
@@ -86,6 +87,8 @@ class App extends Component {
        </div>
        <hr/><br/>
         <MapMethod />
+        <hr/><br/>
+        <ReduceMethod />
       </div>
     );
   }
