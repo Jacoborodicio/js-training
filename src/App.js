@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       data: data,
-      allFriends: null
+      allFriends: null,
+      name: 'Jacobo'
     };
   }  
 
@@ -44,6 +45,25 @@ class App extends Component {
     }, console.log("STATE: ",this.state.allFriends))
 
   }
+
+  changeNameHardHandler = () => {
+    this.setState({
+      name: 'Awesome!'
+    })
+  }
+
+  changeNameParamHandler = newName => {
+    this.setState({
+      name: newName
+    })
+  }
+
+  changeNameEventHandler = event => {
+    this.setState ({
+      name: event.target.value
+    })
+  }
+
   render() {
     // const friends = this.extractFriendsItemByIndex(3);
     // const allFriends = this.state.allFriends.friends.map(friend => <p>{friend}</p>)
@@ -53,6 +73,15 @@ class App extends Component {
        {/* {friends} */}
        <Users />
        {/* {allFriends} */}
+       <hr/>
+       <div>
+         {this.state.name}
+         <br/>
+         <button onClick={this.changeNameHardHandler} >Change state! (name) HARDCODING</button><br/>
+         <button onClick={() => this.changeNameParamHandler('Cambiado mediante anonimous function. Sigue sin ser ejecutada directamente ya que lo que se devuelve es la función anónima en sí, por lo que se ejecuta en contexto, al clicar el botón :)')} >Change state! (name) PARAMS</button><br/>
+         <button onClick={this.changeNameParamHandler.bind(this, 'Cambiado mediante .bind(this, ...) sin uso de anom funct')} >Change state! (name) BIND</button><br/>
+         <input type="text" onChange={this.changeNameEventHandler } value={this.state.name}/>
+       </div>
       </div>
     );
   }
