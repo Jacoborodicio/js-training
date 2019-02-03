@@ -3,6 +3,8 @@ import './App.css';
 import data from './data/arrayObjectsDummy';
 import Users from './components/users/users';
 
+import MapMethod from './components/mapMethod/mapMethod';
+
 // TODO: Comenzar con setState y props in depth
 class App extends Component {
   constructor(props) {
@@ -82,6 +84,8 @@ class App extends Component {
          <button onClick={this.changeNameParamHandler.bind(this, 'Cambiado mediante .bind(this, ...) sin uso de anom funct')} >Change state! (name) BIND</button><br/>
          <input type="text" onChange={this.changeNameEventHandler } value={this.state.name}/>
        </div>
+       <hr/><br/>
+        <MapMethod />
       </div>
     );
   }
