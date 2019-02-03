@@ -21,7 +21,18 @@ class Users extends Component {
                 {name: 'María', age: 47, word: "Orden"},
                 {name: 'Petra', age: 21, word: "Libertad"}
                 ]
-        });
+    }, () => console.log("Edad nueva: 20, edad en el log CALLBACK -> ", this.state.users[0].age)); // CALLBACK, no log a secas, lo que sea, pero en callback!
+        /** Utilizando la linea anterior, la callback del método setState, nos aseguramos de que en ese momento
+         * el state está totalmente actualizado. SIN EMBARGO, utilizando dichas callbacks forzamos rendering 
+         * aunque tengamos implementado el método shouldUpdate o aunque sea un PureComponent, así que en caso
+         * de uso y ver lags o algo, SE DEBERÁ a que nos estamos saltando la restrinción, la función de ese shouldUpdate
+         * y de PureCompoent también, por lo que podemos estar provocando renderizaciones de más!!!!
+         */
+
+
+        // Vemos que esta línea posee en la mayoría de los casos aún el viejo valor, ya que setState es async, 
+        // se observa también como este console log se ejecuta antes de la callback!!!!
+        console.log("Edad nueva: 20, edad en el log-> ", this.state.users[0].age);
     }
 
     newUsersState = () => {
