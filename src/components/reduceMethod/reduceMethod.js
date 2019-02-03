@@ -12,7 +12,15 @@ import React, {Component} from 'react';
                 {x: 3},
                 {x: 4},
             ],
-            objArryNew: null
+            arrayMultidimensional: [
+                [0, 1],
+                [2, 3],
+                [4, 5],
+            ],
+            flattenedArray: null,
+            objArryNew: null,
+            names: ['Ali', 'Jaco', 'Peter', 'Susi', 'Ali', 'Ali', 'Susi', 'Marta', 'Jaco', 'Peter', 'Jaco', 'Jaco'],
+            countedNames: null
         }
     }
 
@@ -39,9 +47,39 @@ sumElemObj = obj => {
     }, 0)
     this.setState({objArryNew: sum});
 }
- 
-    render() {
 
+/**
+ * "Aplanar" arrays, i.e. quitar dimensiones. Es necesario explorar casos como 
+ * aquellos en los que nos podemos encontrar valores nulos o indefinidos así como 
+ * aquellos en los que pueden existir elementos repetidos y queremos o no evitarlos.
+ */
+flattenArray = arry => {
+    const flattened = arry.reduce((acu, cv) => {
+        console.log("ACU: ", acu);
+        console.log("CV: ", cv);
+        return acu.concat(cv);
+    },[])
+    this.setState({flattenedArray: flattened});
+}
+
+countingNames = arry => {
+    const countedN = arry.reduce((acu, cv) => {
+        if(cv in acu){
+            acu[cv]++;
+        }else {
+            acu[cv] = 1;
+        }
+        return acu;
+    }, {})
+    this.setState({countedNames: countedN});
+}
+
+render() {
+        
+        let output = '';
+        for(let item in this.state.countedNames) {
+            output += item + ' ' + this.state.countedNames[item] + ' veces. ';
+        }
         return (
             <div>
             {
@@ -56,6 +94,22 @@ sumElemObj = obj => {
             }</p>
             <p>{this.state.objArryNew}</p>
             <button onClick={() => this.sumElemObj(this.state.objArry)}>Suma X!</button>
+            <br/>
+            <p>{
+                this.state.arrayMultidimensional.map(arry => arry).map(item => item)
+            }</p>
+            <p>{
+                this.state.flattenedArray && this.state.flattenedArray.map(item => item + ' ')
+            }</p>
+            <button onClick={() => this.flattenArray(this.state.arrayMultidimensional)}>Flatte it!</button>
+            <br/>
+            <p>
+                {this.state.names.map(name => name + ' ')}
+            </p>
+            {
+                this.state.countedNames && <p>{output}</p>
+            }
+            <button onClick={() => this.countingNames(this.state.names)}>Count them!</button>
             </div>
         );
     }
