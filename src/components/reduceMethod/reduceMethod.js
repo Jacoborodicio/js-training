@@ -20,8 +20,15 @@ import React, {Component} from 'react';
             flattenedArray: null,
             objArryNew: null,
             names: ['Ali', 'Jaco', 'Peter', 'Susi', 'Ali', 'Ali', 'Susi', 'Marta', 'Jaco', 'Peter', 'Jaco', 'Jaco'],
-            countedNames: null
-        }
+            countedNames: null,
+            people: [
+            { name: 'Alice', age: 41 },
+            { name: 'Max', age: 24 },
+            { name: 'Jane', age: 34}
+          ],
+          orderedPeople: [],
+        };
+          
     }
 
 sumElements = (lista) => {
@@ -74,6 +81,25 @@ countingNames = arry => {
     this.setState({countedNames: countedN});
 }
 
+/**
+ * Función de agrupación por una determinada propiedad de un array de objetos
+ * a través de reduce
+ */
+groupBy = (objectArray, property) => {
+
+    const ordObjectArray =  objectArray.reduce((acc, obj) => {
+        let key = obj[property];
+        if(!acc[key]){
+            acc[key] = [];
+        }
+
+        acc[key].push(obj);
+        return acc;
+    }, {});
+    console.log(ordObjectArray)
+    this.setState({orderedPeople: ordObjectArray});
+}
+
 render() {
         
         let output = '';
@@ -81,7 +107,7 @@ render() {
             output += item + ' ' + this.state.countedNames[item] + ' veces. ';
         }
         return (
-            <div>
+            <div style={{padding: '2rem', backgroundColor: '#f5f5f5'}}>
             {
                 this.state.list.map(item => item + ' ')
             }
@@ -110,6 +136,17 @@ render() {
                 this.state.countedNames && <p>{output}</p>
             }
             <button onClick={() => this.countingNames(this.state.names)}>Count them!</button>
+            <hr/>
+            <div>
+                <p>
+                    {this.state.people.map(person => ' ' + person.name + ' de ' + person.age + ' ')}
+                </p>
+                <button onClick={() => this.groupBy(this.state.people, "name")}>Order by name!</button>
+                <button onClick={() => this.groupBy(this.state.people, "age")}>Order by age!</button>
+                <p>
+                    {/* {this.state.orderedPeople.map(person =>  person[0] + ' ' + person[1])} */}
+                </p>
+            </div>
             </div>
         );
     }
