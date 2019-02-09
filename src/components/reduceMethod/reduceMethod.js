@@ -24,9 +24,32 @@ import React, {Component} from 'react';
             people: [
             { name: 'Alice', age: 41 },
             { name: 'Max', age: 24 },
-            { name: 'Jane', age: 34}
+            { name: 'Jane', age: 34},
+            { name: 'Marie', age: 26},
+            { name: 'Marta', age: 26}
           ],
-          orderedPeople: [],
+          orderedPeople: {},
+          // friends - an array of objects 
+// where object field "books" - list of favorite books 
+            friends: [
+                {
+                name: 'Anna',
+                books: ['Bible', 'Harry Potter'],
+                age: 21
+                }, 
+                {
+                name: 'Bob',
+                books: ['War and peace', 'Romeo and Juliet'],
+                age: 26
+                }, 
+                {
+                name: 'Alice',
+                books: ['The Lord of the Rings', 'The Shining'],
+                age: 18
+                }
+            ],
+            arryWithDuplicates: ['a', 'b', 'a', 'b', 'c', 'e', 'e', 'c', 'd', 'd', 'd', 'd'],
+            arryWithoutDuplis: [],
         };
           
     }
@@ -100,6 +123,46 @@ groupBy = (objectArray, property) => {
     this.setState({orderedPeople: ordObjectArray});
 }
 
+
+showPersons = obj => {
+    let toRender = '';
+    for(let item in obj) {
+        // console.log(item);
+        // console.log(obj[item])
+        toRender += obj[item].map(item => {
+            return `${item.name} con ${item.age} de edad. `;
+        })
+    }
+    console.log(toRender);
+    return toRender;
+}
+
+    obtainNestedElems = (arryObjs, keyNestedArry) => {
+        const aux =  arryObjs.reduce((acc, val) => {
+            return [...acc, ...val[keyNestedArry]];
+        // },[]);
+        }, ["Ejemplo de primer elemento por defecto", "o de muchos xD"]);
+        console.log("Nested arry.. : ", aux);
+        return aux;
+    }
+
+    removeDuplisReduce = arryDup => {
+        // Index of devuelve -1 si no se encuentra en la cadena el valor especificado
+        let result = [];
+        result = arryDup.reduce((acc, val) => {
+            if(acc.indexOf(val) === -1){
+                acc.push(val);
+            }
+            return acc;
+        }, []);
+        this.setState({arryWithoutDuplis: result});
+    }
+
+    removeDuplisSet = arryDuo => {
+        let result = Array.from(new Set(arryDuo));
+        this.setState({arryWithoutDuplis: result});
+    }
+
 render() {
         
         let output = '';
@@ -144,8 +207,23 @@ render() {
                 <button onClick={() => this.groupBy(this.state.people, "name")}>Order by name!</button>
                 <button onClick={() => this.groupBy(this.state.people, "age")}>Order by age!</button>
                 <p>
-                    {/* {this.state.orderedPeople.map(person =>  person[0] + ' ' + person[1])} */}
+                    {this.showPersons(this.state.orderedPeople)}
                 </p>
+            </div>
+            <div>
+                <button onClick={() => this.obtainNestedElems(this.state.friends, 'books')} >Obtener array embedido. Mirar console</button>
+            </div>
+            <div>
+                <p>Array antiguo:</p>
+                {
+                    this.state.arryWithDuplicates.map(item => item + ' ')
+                }
+                <button onClick={() => this.removeDuplisReduce(this.state.arryWithDuplicates)} >Remover duplicados con remove</button>
+                <button onClick={() => this.removeDuplisSet(this.state.arryWithDuplicates)} >Remover duplicados con Array.from(new Set(arry))</button>
+                <p>Array nuevo:</p>
+                {
+                    this.state.arryWithoutDuplis.map(item => item + ' ')
+                }
             </div>
             </div>
         );
