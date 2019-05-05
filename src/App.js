@@ -5,7 +5,7 @@ import Users from './components/users/users';
 
 import MapMethod from './components/mapMethod/mapMethod';
 import ReduceMethod from './components/reduceMethod/reduceMethod';
-
+import WorkingWithObjects from './components/workingWithObjects/workingWithObjects';
 // TODO: Comenzar con setState y props in depth
 class App extends Component {
   constructor(props) {
@@ -74,8 +74,8 @@ class App extends Component {
     return (
       <div className="App">
        {/* {friends} */}
-       <Users />
        {/* {allFriends} */}
+       {/* <Users />
        <hr/>
        <div>
          {this.state.name}
@@ -88,7 +88,9 @@ class App extends Component {
        <hr/><br/>
         <MapMethod />
         <hr/><br/>
-        <ReduceMethod />
+        <ReduceMethod /> */}
+
+        <WorkingWithObjects />
       </div>
     );
   }
